@@ -27,7 +27,7 @@ const Login = ({ handleLogin }) => {
           alt="Logo"
           className="login__logo"
         />
-        <Link to="/register" className="login__header-link">
+        <Link to="/signup" className="login__header-link">
           Regístrate
         </Link>
       </div>

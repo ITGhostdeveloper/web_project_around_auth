@@ -15,7 +15,7 @@ const Register = ({ handleRegistration }) => {
     }));
   };
 
-  const handleSubmit = (e) => { 
+  const handleSubmit = (e) => {
     e.preventDefault();
     handleRegistration(data);
   };
@@ -27,7 +27,7 @@ const Register = ({ handleRegistration }) => {
           alt="Logo"
           className="register__logo"
         />
-        <Link to="/login" className="register__header-link">
+        <Link to="/signin" className="register__header-link">
           Iniciar Sesion
         </Link>
       </div>

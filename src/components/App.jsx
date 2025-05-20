@@ -9,6 +9,7 @@ import Signup from "./Register/Register";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import * as auth from "../utils/auth";
 import { api } from "../utils/api";
+import InfoTooltip from "./InfoTooltip/InfoTooltip";
 
 function App() {
   const [userData, setUserData] = useState({ email: "" });
@@ -16,12 +17,19 @@ function App() {
   const navigate = useNavigate();
 
   const handleRegistration = ({ email, password }) => {
-    console.log("handleRegistration", email, password);
     auth
       .signUp(email, password)
       .then(() => {
-        console.log("Usuario registrado:");
-        navigate("/signin");
+        // Mostrar el Popup antes de redirigir
+        handleOpenPopup(
+          <InfoTooltip
+            title="¡Correcto! Ya estás registrado."
+            onClose={() => {
+              handleClosePopup();
+              navigate("/signin");
+            }}
+          />
+        );
       })
       .catch(console.error);
   };
@@ -205,6 +213,7 @@ function App() {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      {popup}
     </CurrentUserContext.Provider>
   );
 }
