@@ -17,6 +17,7 @@ const Login = ({ handleLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("first")
     handleLogin(data);
   };
   return (

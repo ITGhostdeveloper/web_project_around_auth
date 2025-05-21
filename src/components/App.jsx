@@ -10,6 +10,9 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 import * as auth from "../utils/auth";
 import { api } from "../utils/api";
 import InfoTooltip from "./InfoTooltip/InfoTooltip";
+import Popup from "./Main/components/popup/Popup";
+import fail from "../images/fail.png";
+import success from "../images/check.png";
 
 function App() {
   const [userData, setUserData] = useState({ email: "" });
@@ -20,23 +23,45 @@ function App() {
     auth
       .signUp(email, password)
       .then(() => {
-        // Mostrar el Popup antes de redirigir
-        handleOpenPopup(
-          <InfoTooltip
-            title="¡Correcto! Ya estás registrado."
-            onClose={() => {
-              handleClosePopup();
-              navigate("/signin");
-            }}
-          />
-        );
+        handleOpenPopup({
+          children: (
+            <InfoTooltip
+              title="¡Correcto! Ya estás registrado."
+              image={success}
+              onClose={() => {
+                handleClosePopup();
+              }}
+            />
+          ),
+        });
+        navigate("/signin");
       })
-      .catch(console.error);
+      .catch((err) => {
+        let message = "¡Error! Este correo ya está registrado.";
+        let error = fail;
+
+        if (err.code === "auth/email-already-in-use") {
+          message = "¡Error! Este correo ya esta en uso";
+        }
+        handleOpenPopup({
+          children: (
+            <InfoTooltip
+              title={message}
+              image={error}
+              onClose={() => {
+                handleClosePopup();
+              }}
+            />
+          ),
+        });
+      });
   };
   // manejo de la autenticación
   const handleLogin = ({ email, password }) => {
+    console.log("second");
+    console.log(email);
+    console.log(password);
     if (!email || !password) return;
-
     auth
       .authorize(email, password)
       .then((data) => {
@@ -60,7 +85,21 @@ function App() {
           console.error("No se recibió token.");
         }
       })
-      .catch((err) => console.error("Error al autorizar:", err));
+      .catch(() => {
+        let message = "¡Error! Credenciales incorrectas.";
+        let error = fail;
+        handleOpenPopup({
+          children: (
+            <InfoTooltip
+              title={message}
+              image={error}
+              onClose={() => {
+                handleClosePopup();
+              }}
+            />
+          ),
+        });
+      });
   };
 
   const [popup, setPopup] = useState(null);
@@ -213,7 +252,11 @@ function App() {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      {popup}
+      {popup && (
+        <Popup onClose={handleClosePopup} title={popup.title}>
+          {popup.children}
+        </Popup>
+      )}
     </CurrentUserContext.Provider>
   );
 }

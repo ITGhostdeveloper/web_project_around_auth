@@ -17,9 +17,9 @@ function Main({
   onCardDelete,
   onUpdateAvatar,
   onAddPlaceSubmit,
-  handleClosePopup,
+  //handleClosePopup,
   handleOpenPopup,
-  popup,
+  //popup,
 }) {
   const [avatar, setAvatar] = useState("");
   const { currentUser } = useContext(CurrentUserContext);
@@ -107,11 +107,7 @@ function Main({
           ))}
         </div>
       </section>
-      {popup && (
-        <Popup onClose={handleClosePopup} title={popup.title}>
-          {popup.children}
-        </Popup>
-      )}
+      
     </main>
   );
 }
