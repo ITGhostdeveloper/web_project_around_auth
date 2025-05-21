@@ -17,10 +17,10 @@ Vite.
 ## Instalacion
 
 1. Clona el repositorio:
-   git clone https://github.com/ITGhostdeveloper/web_project_around_react.git
+   git clone https://itghostdeveloper.github.io/web_project_around_auth/
 
 2. Entra en la carpeta:
-   cd web_project_around_react
+   cd web_project_around_auth
 
 3. Instala dependencias:
    npm install
@@ -52,4 +52,4 @@ Vite.
 
 ## Autor
 
-Creado por [Andres Hurtado] (https://itghostdeveloper.github.io/web_project_around_react/).
+Creado por [Andres Hurtado] (https://itghostdeveloper.github.io/web_project_around_auth/).
